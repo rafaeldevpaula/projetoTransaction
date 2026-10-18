@@ -2,80 +2,111 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Explicacao do projeto de analise paralela</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Documentação do Projeto - Análise Paralela de Transações</title>
 <style>
-@page{size:A4;margin:18mm}body{font-family:Arial,sans-serif;color:#202b33;line-height:1.5;max-width:850px;margin:30px auto;padding:0 25px}h1{color:#123b5d;border-bottom:4px solid #e07a32;padding-bottom:10px}h2{color:#1677a8;margin-top:28px}code{background:#eef3f6;padding:2px 5px;border-radius:3px}pre{background:#172b3a;color:#f5f8fa;padding:14px;border-radius:5px;overflow-wrap:break-word}.box{background:#f4f7f9;border-left:5px solid #1677a8;padding:10px 15px;margin:15px 0}.files{display:grid;grid-template-columns:190px 1fr;gap:6px 15px}.files strong{color:#123b5d}@media print{body{margin:0;padding:0}}
+@page { size: A4; margin: 18mm; }
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #1e293b;
+    line-height: 1.6;
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 0 25px;
+    background: #f8fafc;
+}
+h1 {
+    color: #0f172a;
+    border-bottom: 3px solid #0284c7;
+    padding-bottom: 12px;
+}
+h2 {
+    color: #0369a1;
+    margin-top: 32px;
+}
+h3 {
+    color: #0f172a;
+    margin-top: 18px;
+}
+code {
+    background: #e2e8f0;
+    padding: 3px 6px;
+    border-radius: 4px;
+    font-size: 13px;
+}
+pre {
+    background: #0f172a;
+    color: #f8fafc;
+    padding: 16px;
+    border-radius: 8px;
+    overflow-x: auto;
+}
+.box {
+    background: #e0f2fe;
+    border-left: 5px solid #0284c7;
+    padding: 12px 18px;
+    margin: 18px 0;
+    border-radius: 0 8px 8px 0;
+}
+.student-card {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.student-title {
+    font-weight: 700;
+    color: #0284c7;
+    font-size: 16px;
+    margin-bottom: 6px;
+}
 </style>
 </head>
 <body>
-<h1>Explicacao do projeto: analise paralela de transacoes financeiras</h1>
-<p><strong>Disciplina:</strong> Programacao Paralela e Distribuida</p>
 
-<h2>1. Objetivo</h2>
-<p>O projeto analisa transacoes financeiras sinteticas e compara tres formas de processamento: sequencial, paralelo com <code>ExecutorService</code> e paralelo com tentativa de afinidade de processador.</p>
+<h1>Análise Paralela de Transações Financeiras</h1>
+<p><strong>Disciplina:</strong> Programação Paralela e Distribuída (JCRPGPD)</p>
+<p><strong>Tema:</strong> Paralelismo de Dados com ExecutorService e Afinidade de Processador</p>
 
-<h2>2. Estrutura dos arquivos</h2>
-<div class="files">
-<strong>Transaction.java</strong><span>Representa uma transacao usando um record.</span>
-<strong>TransactionGenerator.java</strong><span>Cria dados sinteticos reproduziveis.</span>
-<strong>AnalysisResult.java</strong><span>Calcula agregacoes, suspeitas e categorias.</span>
-<strong>CategoryStats.java</strong><span>Armazena estatisticas de cada categoria.</span>
-<strong>Analyzer.java</strong><span>Contem as analises sequencial e paralela.</span>
-<strong>AffinitySupport.java</strong><span>Tenta associar uma tarefa a uma CPU.</span>
-<strong>Main.java</strong><span>Executa benchmarks e gera os resultados.</span>
-<strong>.vscode/</strong><span>Configura compilacao e execucao sem Maven.</span>
+<h2>1. Divisão do Grupo por Aluno (Seções 8 e 15 do Regulamento)</h2>
+
+<div class="student-card">
+    <div class="student-title">👤 Aluno 1 — Agregação Financeira (AgregacaoFinanceira.java)</div>
+    <p>Responsável pelo cálculo de soma total, média aritmética, maior e menor transação. Disponibiliza a versão sequencial, a versão paralela com <code>ExecutorService</code> e a versão com afinidade de CPU.</p>
 </div>
 
-<h2>3. Modelo da transacao</h2>
-<p>Cada objeto <code>Transaction</code> possui id, cliente, data, valor, categoria, cidade, estado, tipo, estabelecimento e metodo de pagamento. O vetor e criado em memoria para que todas as abordagens processem os mesmos dados.</p>
+<div class="student-card">
+    <div class="student-title">👤 Aluno 2 — Detecção de Transações Suspeitas (DetectorTransacoesSuspeitas.java)</div>
+    <p>Responsável pela detecção de transações de risco (valor &gt; R$ 10.000 ou valor &gt; R$ 5.000 em Eletrônicos), comparando as implementações sequencial e paralela.</p>
+</div>
 
-<h2>4. Geracao dos dados</h2>
-<p>O gerador usa uma semente fixa, garantindo testes reproduziveis. Os valores alternam entre quatro distribuicoes: uniforme, normal, exponencial e concentrada. Algumas transacoes recebem valores altos para testar a regra de suspeita.</p>
+<div class="student-card">
+    <div class="student-title">👤 Aluno 3 — Estatísticas por Categoria (EstatisticasPorCategoria.java e CategoryStats.java)</div>
+    <p>Responsável pelo cálculo por categoria (Alimentação, Transporte, Eletrônicos, Saúde, Educação), apurando quantidade, total, média e pico de valor, com redução paralela de mapas.</p>
+</div>
 
-<h2>5. Analise sequencial</h2>
-<p><code>Analyzer.sequential</code> percorre o vetor uma vez. Para cada transacao, <code>AnalysisResult.accept</code> atualiza soma, quantidade, extremos, suspeitas e o mapa da categoria.</p>
-<div class="box">Uma transacao e suspeita quando possui valor acima de 10.000 ou quando possui valor acima de 5.000 e categoria Eletronicos.</div>
-<p>Além das análises exigidas, o sistema calcula estatísticas por tipo de transação, por método de pagamento e por cidade. Para cada grupo são mostrados quantidade, valor total, valor médio e maior valor.</p>
+<div class="student-card">
+    <div class="student-title">👤 Aluno 4 — Benchmark e Análise de Desempenho (Main.java e HtmlReport.java)</div>
+    <p>Responsável pela experimentação, aquecimento prévio da JVM (Warm-up), cálculo de Speedup e Eficiência Paralela, saída formatada no terminal e geração dos relatórios gráficos visuais.</p>
+</div>
 
-<h2>6. Paralelismo de dados</h2>
-<p>O vetor e dividido em blocos contiguos. Cada tarefa recebe uma faixa diferente e executa o mesmo algoritmo. O programa cria uma tarefa por bloco, e nao uma thread por transacao.</p>
-<p>Cada tarefa retorna um <code>AnalysisResult</code>. Ao final, os resultados parciais sao combinados com <code>merge</code>. Essa etapa e a reducao dos resultados paralelos.</p>
+<h2>2. Metodologia de Paralelização</h2>
+<p>O conjunto de transações é particionado em blocos contíguos de tamanho balanceado atribuídos a cada thread (paralelismo de dados). Não são criadas threads individuais por transação, respeitando a restrição da Seção 13. Ao final, ocorre a redução (merge) dos resultados parciais.</p>
 
-<h2>7. ExecutorService</h2>
-<p><code>Analyzer.parallel</code> cria um executor com um numero fixo de threads. Cada bloco e enviado como <code>Callable&lt;AnalysisResult&gt;</code>, e cada <code>Future</code> representa o resultado que sera obtido depois.</p>
-<p>O executor e encerrado no bloco <code>finally</code>, liberando as threads mesmo quando ocorre uma excecao.</p>
+<div class="box">
+    <strong>Fórmulas Calculadas:</strong><br>
+    <code>Speedup = Tempo_Sequencial / Tempo_Paralelo</code><br>
+    <code>Eficiência = Speedup / Quantidade_de_Threads</code>
+</div>
 
-<h2>8. Afinidade de processador</h2>
-<p>Quando o modo de afinidade esta ativo, cada tarefa recebe o indice da CPU correspondente. <code>AffinitySupport</code> procura a API OpenHFT por reflexao. Sem a biblioteca ou suporte nativo, a analise continua funcionando, mas a afinidade nao e aplicada.</p>
-
-<h2>9. Benchmark</h2>
-<p><code>Main</code> mede o tempo com <code>System.nanoTime</code>. Para cada quantidade de threads, executa os modos Executor e Executor com afinidade. Em seguida, verifica se a contagem e a soma coincidem com o resultado sequencial.</p>
-<pre>speedup = tempo_sequencial / tempo_paralelo
-eficiencia = speedup / numero_de_threads</pre>
-<p>Speedup maior indica que a versao paralela foi mais rapida. Eficiencia mostra quanto do potencial das threads foi aproveitado.</p>
-
-<h2>10. Graficos</h2>
-<p>Ao final, <code>Main</code> cria <code>resultados.html</code>. O relatorio apresenta barras proporcionais para tempo, speedup e eficiencia, usando uma cor para cada modo. O arquivo pode ser aberto no navegador e usado para capturar imagens para o relatorio da disciplina.</p>
-
-<h2>11. Como interpretar os resultados</h2>
-<p><strong>Valor total:</strong> soma dos valores de todas as transacoes. Ele deve ser igual na analise sequencial e nas analises paralelas.</p>
-<p><strong>Valor medio:</strong> valor total dividido pela quantidade de transacoes. Serve para observar o valor medio movimentado.</p>
-<p><strong>Transacoes suspeitas:</strong> quantidade de registros que obedecem a regra definida no projeto: valor acima de 10.000 ou valor acima de 5.000 na categoria Eletronicos.</p>
-<p><strong>Estatisticas por categoria:</strong> mostram quantidade, total, media e maior transacao de Alimentacao, Transporte, Eletronicos, Saude e Educacao.</p>
-<p><strong>Analises extras:</strong> o relatorio tambem organiza os mesmos dados por tipo de transacao, metodo de pagamento e cidade.</p>
-<p><strong>Tempo (ms):</strong> tempo gasto para analisar os dados. Uma barra menor representa uma execucao mais rapida.</p>
-<p><strong>Speedup:</strong> compara o tempo sequencial com o tempo paralelo. Por exemplo, speedup 2 significa que a execucao paralela foi aproximadamente duas vezes mais rapida.</p>
-<p><strong>Eficiencia:</strong> mostra o aproveitamento das threads. Ela e calculada dividindo o speedup pela quantidade de threads. Quanto mais proxima de 1, melhor o aproveitamento.</p>
-<p><strong>Resultado OK:</strong> indica que a analise paralela produziu a mesma quantidade de transacoes e o mesmo total da analise sequencial.</p>
-
-<h2>12. Como executar</h2>
-<p>No VS Code, abra <strong>Run and Debug</strong> e selecione <strong>Executar analise de transacoes</strong>.</p>
+<h2>3. Como Executar o Projeto</h2>
+<p>No terminal PowerShell:</p>
 <pre>New-Item -ItemType Directory -Force out | Out-Null
 javac --release 25 -d out (Get-ChildItem -Recurse src/main/java -Filter *.java).FullName
 java -cp out app.Main --quantidade=100000 --threads=1,2,4,8</pre>
-<p>Depois, abra <code>resultados.html</code> no navegador.</p>
+<p>Em seguida, abra o arquivo <code>resultados.html</code> no navegador para inspecionar os gráficos gerados.</p>
 
-<h2>13. Conclusao</h2>
-<p>O projeto demonstra paralelismo de dados porque varias tarefas executam o mesmo algoritmo sobre partes diferentes do vetor. A comparacao dos tempos permite discutir overhead, balanceamento, quantidade de nucleos, speedup, eficiencia e efeito da afinidade de processador.</p>
 </body>
 </html>

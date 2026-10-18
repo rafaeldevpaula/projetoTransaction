@@ -1,83 +1,84 @@
-# Explicacao do projeto
+# Análise Paralela de Transações Financeiras
 
-## 1. Objetivo
+**Disciplina:** Programação Paralela e Distribuída (JCRPGPD)  
+**Tema:** Análise Paralela utilizando `ExecutorService` e Afinidade de Processador  
 
-O projeto analisa transacoes financeiras sinteticas e compara tres formas de processamento: sequencial, paralelo com `ExecutorService` e paralelo com tentativa de afinidade de processador.
+---
 
-## 2. Estrutura dos arquivos
+## 1. Objetivo do Trabalho
 
-- `Transaction.java`: representa uma transacao usando um `record`.
-- `TransactionGenerator.java`: cria dados sinteticos reproduziveis.
-- `AnalysisResult.java`: calcula soma, media, maior valor, menor valor, suspeitas e estatisticas por categoria.
-- `CategoryStats.java`: guarda quantidade, total, media e maior valor de uma categoria.
-- `Analyzer.java`: contem as versoes sequencial e paralela da analise.
-- `AffinitySupport.java`: tenta associar a tarefa a uma CPU quando a biblioteca OpenHFT esta disponivel.
-- `Main.java`: recebe parametros, mede tempos, compara resultados e gera os arquivos de resultados.
-- `.vscode/`: configura a compilacao e execucao no VS Code sem Maven.
+Desenvolver uma aplicação em Java para análise de grandes volumes de transações financeiras utilizando a técnica de **paralelismo de dados**.
 
-## 3. Modelo da transacao
+O sistema compara três abordagens:
+1. **Sequencial (Baseline - 1 thread):** Processamento tradicional linear.
+2. **Paralelo com ExecutorService:** Divisão do conjunto em fatias contíguas atribuídas a um pool de threads gerenciado.
+3. **Paralelo com ExecutorService + Afinidade de CPU:** Associação das threads a processadores/núcleos específicos (CPU Pinning).
 
-Cada objeto `Transaction` possui id, cliente, data, valor, categoria, cidade, estado, tipo, estabelecimento e metodo de pagamento. O vetor de transacoes e criado em memoria para que todas as abordagens processem exatamente os mesmos dados.
+---
 
-## 4. Geracao dos dados
+## 2. Divisão das Responsabilidades no Grupo
 
-O gerador usa uma semente fixa, garantindo que os testes sejam reproduziveis. Os valores alternam entre quatro distribuicoes: uniforme, normal, exponencial e concentrada. Algumas transacoes recebem valores altos para testar a regra de suspeita.
+Conforme solicitado nas **Seções 8 e 15** do regulamento da avaliação, o projeto está estruturado em módulos individuais claramente atribuídos a cada integrante:
 
-## 5. Analise sequencial
+### 👤 Aluno 1 — Agregação Financeira (`AgregacaoFinanceira.java`)
+- **Responsabilidades:**
+  - Cálculo do valor total transacionado (soma);
+  - Cálculo do valor médio das transações (ticket médio);
+  - Identificação da maior transação registrada;
+  - Identificação da menor transação registrada.
+- **Implementações fornecidas:**
+  - Versão sequencial;
+  - Versão paralela com `ExecutorService` e tarefa explícita `Callable<Resultado>`;
+  - Versão paralela com suporte a afinidade de CPU.
 
-O metodo `Analyzer.sequential` percorre o vetor uma vez. Para cada transacao, `AnalysisResult.accept` atualiza soma, quantidade, extremos, suspeitas e o mapa da categoria. A media e calculada por `total / quantidade`.
+### 👤 Aluno 2 — Detecção de Transações Suspeitas (`DetectorTransacoesSuspeitas.java`)
+- **Responsabilidades:**
+  - Implementação das regras de negócio de detecção de fraudes/riscos:
+    1. *Regra 1:* Transação com valor > R$ 10.000,00;
+    2. *Regra 2:* Transação com valor > R$ 5.000,00 na categoria "Eletrônicos".
+  - Contabilização da quantidade e do montante financeiro sob suspeita.
+- **Implementações fornecidas:**
+  - Versão sequencial e versão paralela com partição dos dados e redução.
 
-Uma transacao e considerada suspeita quando possui valor acima de 10.000 ou quando possui valor acima de 5.000 e categoria `Eletronicos`.
+### 👤 Aluno 3 — Estatísticas por Categoria (`EstatisticasPorCategoria.java` e `CategoryStats.java`)
+- **Responsabilidades:**
+  - Classificação e cálculo estatístico para as 5 categorias obrigatórias:
+    - *Alimentação, Transporte, Eletrônicos, Saúde e Educação*.
+  - Para cada categoria calcula: quantidade, valor total, valor médio e maior transação.
+- **Implementações fornecidas:**
+  - Versão sequencial e versão paralela com mapas de categorias e redução concorrente (`merge`).
 
-Além das análises exigidas, o sistema calcula estatísticas por tipo de transação, por método de pagamento e por cidade. Para cada grupo são mostrados quantidade, valor total, valor médio e maior valor.
+### 👤 Aluno 4 — Benchmark e Análise de Desempenho (`Main.java` e `HtmlReport.java`)
+- **Responsabilidades:**
+  - Implementação do módulo de experimentação e medição precisa de tempos com `System.nanoTime()`;
+  - Aquecimento prévio da JVM (Warm-up) para evitar distorções do compilador JIT;
+  - Cálculo do **Speedup** ($S = \frac{T_{sequencial}}{T_{paralelo}}$);
+  - Cálculo da **Eficiência Paralela** ($E = \frac{Speedup}{N_{threads}}$);
+  - Exibição dos resultados no console no layout padronizado da Seção 18 do PDF;
+  - Geração dos relatórios gráficos visuais (`resultados.html`) e dados tabulares (`.csv`).
 
-## 6. Paralelismo de dados
+---
 
-O vetor e dividido em blocos contiguos. Para quatro threads, por exemplo, cada tarefa recebe uma faixa diferente do vetor. O programa cria uma tarefa por bloco, e nao uma thread por transacao.
+## 3. Arquitetura e Paralelismo de Dados
 
-Cada tarefa executa o mesmo algoritmo em sua parte e retorna um `AnalysisResult`. Ao final, o programa combina os resultados parciais usando `merge`. Essa combinacao e a reducao dos resultados paralelos.
+- **Divisão dos Dados:** Para um conjunto de $N$ transações e $T$ threads, o vetor é particionado em blocos contíguos de tamanho balanceado $\lceil N / T \rceil$. Cada thread processa exclusivamente sua faixa $[inicio, fim)$.
+- **Requisito Importante (Seção 13):** O programa **não** cria uma thread por transação; cria apenas um número de tarefas proporcional aos núcleos/threads configurados.
+- **Redução de Resultados:** Cada tarefa retorna um resultado parcial (`Future<T>`). Ao final do processamento, a thread principal faz a consolidação (`merge`), garantindo a consistência matemática dos dados.
 
-## 7. ExecutorService
+---
 
-`Analyzer.parallel` cria um `ExecutorService` com um numero fixo de threads. Cada bloco e enviado como `Callable<AnalysisResult>`, permitindo que a tarefa devolva seu resultado. A classe `Future` representa o resultado que sera obtido depois.
+## 4. Como Compilar e Executar
 
-O executor e encerrado no bloco `finally`, garantindo que as threads sejam liberadas mesmo se ocorrer uma excecao.
+### Opção A: Pelo VS Code
+1. Abra a aba **Run and Debug** (`Ctrl + Shift + D`).
+2. Selecione **Executar analise de transacoes** e clique no botão Play (verde).
+3. A tarefa compilará os arquivos automaticamente para a pasta `out` e iniciará o benchmark.
 
-## 8. Afinidade de processador
-
-Quando o modo de afinidade esta ativo, cada tarefa recebe o indice da CPU correspondente. `AffinitySupport` procura a classe da biblioteca OpenHFT por reflexao. Se a biblioteca ou o suporte nativo nao estiverem disponiveis, a analise continua funcionando, mas a afinidade nao e aplicada.
-
-## 9. Benchmark
-
-`Main` mede o tempo com `System.nanoTime`. Para cada quantidade de threads, executa os modos `executor` e `executor-affinity`. Depois confere se a contagem e a soma coincidem com o resultado sequencial.
-
-As formulas usadas sao:
-
-```text
-speedup = tempo_sequencial / tempo_paralelo
-eficiencia = speedup / numero_de_threads
-```
-
-Um speedup maior indica que o paralelo foi mais rapido. A eficiencia mostra quanto do potencial das threads foi aproveitado.
-
-## 10. Graficos
-
-Ao final, `Main` cria `resultados.html`. O relatorio apresenta barras proporcionais para tempo, speedup e eficiencia, usando uma cor para cada modo. O arquivo pode ser aberto no navegador e usado para capturar imagens para o relatorio da disciplina.
-
-## 11. Como executar
-
-No VS Code, abra **Run and Debug** e selecione **Executar analise de transacoes**. A tarefa compila os arquivos para a pasta temporaria `out` e inicia `Main`.
-
-No PowerShell:
-
+### Opção B: Pelo Terminal PowerShell
 ```powershell
 New-Item -ItemType Directory -Force out | Out-Null
 javac --release 25 -d out (Get-ChildItem -Recurse src/main/java -Filter *.java).FullName
 java -cp out app.Main --quantidade=100000 --threads=1,2,4,8
 ```
 
-Depois, abra `resultados.html`.
-
-## 12. Conclusao
-
-O projeto demonstra paralelismo de dados porque varias tarefas executam o mesmo algoritmo sobre partes diferentes do vetor. A comparacao dos tempos permite discutir overhead, balanceamento, quantidade de nucleos, speedup, eficiencia e o efeito pratico da afinidade de processador.
+Após a execução, abra o arquivo `resultados.html` no navegador para visualizar o painel gráfico com tabelas e gráficos de barras.
