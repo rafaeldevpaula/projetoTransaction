@@ -1,0 +1,16 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Executar analise de transacoes",
+            "request": "launch",
+            "mainClass": "app.Main",
+            "classPaths": [
+                "${workspaceFolder}/out"
+            ],
+            "args": "--quantidade=10000 --threads=1,2,4",
+            "preLaunchTask": "Compilar Java"
+        }
+    ]
+}

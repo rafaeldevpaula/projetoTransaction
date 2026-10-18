@@ -1,0 +1,20 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Compilar Java",
+            "type": "shell",
+            "command": "powershell",
+            "args": [
+                "-NoProfile",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-Command",
+                "$sources = Get-ChildItem -Path '${workspaceFolder}/src/main/java' -Recurse -Filter *.java; New-Item -ItemType Directory -Force -Path '${workspaceFolder}/out' | Out-Null; javac --release 25 -d '${workspaceFolder}/out' $sources.FullName"
+            ],
+            "problemMatcher": [
+                "$javac"
+            ]
+        }
+    ]
+}
