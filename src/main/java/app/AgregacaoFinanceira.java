@@ -56,11 +56,19 @@ public class AgregacaoFinanceira {
         }
 
         public double getMaiorValor() {
-            return quantidade == 0 ? 0.0 : maiorValor;
+            if (quantidade == 0) {
+                return 0.0;
+            } else {
+                return maiorValor;
+            }
         }
 
         public double getMenorValor() {
-            return quantidade == 0 ? 0.0 : menorValor;
+            if (quantidade == 0) {
+                return 0.0;
+            } else {
+                return menorValor;
+            }
         }
     }
 

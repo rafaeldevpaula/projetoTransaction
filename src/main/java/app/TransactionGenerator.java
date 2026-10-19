@@ -6,7 +6,7 @@ import java.util.SplittableRandom;
 public final class TransactionGenerator {
     private static final String[] CATEGORIES = {"Alimentacao", "Transporte", "Eletronicos", "Saude", "Educacao"};
     private static final String[] CITIES = {"Jacareí", "São José dos Campos", "Caçapava", "Taubaté", "Santa Branca"};
-    private static final String[] ESTABLISHMENTS = {"Mercado Central", "Tech Store", "Farmacia Vida", "Escola Saber", "Restaurante Bom Sabor"};
+    private static final String[] ESTABLISHMENTS = {"Mercado Municipal", "UBER", "Drogaria Farma Conde", "Livraria Leitura", "Restaurante Giraffas"};
     private static final String[] PAYMENT_METHODS = {"CARTAO", "BOLETO", "DINHEIRO", "CARTEIRA_DIGITAL"};
 
     private TransactionGenerator() { }
@@ -17,10 +17,10 @@ public final class TransactionGenerator {
         for (int index = 0; index < size; index++) {
             double value;
             switch (index % 4) {
-                case 0 -> value = 20 + random.nextDouble() * 4980;
-                case 1 -> value = Math.max(10, 1800 + random.nextGaussian() * 1000);
-                case 2 -> value = 10 + (-Math.log(1 - random.nextDouble()) * 2200);
-                default -> value = 300 + random.nextDouble() * 900;
+                case 0 -> value = 20 + random.nextDouble() * 4980; // Variada Uniforme
+                case 1 -> value = Math.max(10, 1800 + random.nextGaussian() * 1000); // Normal
+                case 2 -> value = 10 + (-Math.log(1 - random.nextDouble()) * 2200); // Exponencial
+                default -> value = 300 + random.nextDouble() * 900; // Variada Uniforme mais concentrada
             }
             if (index % 137 == 0) value += 12000;
             transactions[index] = new Transaction(index + 1L, "C" + (index % 10000),
