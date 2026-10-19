@@ -5,7 +5,7 @@ import java.util.SplittableRandom;
 
 public final class TransactionGenerator {
     private static final String[] CATEGORIES = {"Alimentacao", "Transporte", "Eletronicos", "Saude", "Educacao"};
-    private static final String[] CITIES = {"Recife", "Olinda", "Jaboatao", "Paulista", "Caruaru"};
+    private static final String[] CITIES = {"Jacareí", "São José dos Campos", "Caçapava", "Taubaté", "Santa Branca"};
     private static final String[] ESTABLISHMENTS = {"Mercado Central", "Tech Store", "Farmacia Vida", "Escola Saber", "Restaurante Bom Sabor"};
     private static final String[] PAYMENT_METHODS = {"CARTAO", "BOLETO", "DINHEIRO", "CARTEIRA_DIGITAL"};
 
@@ -25,7 +25,7 @@ public final class TransactionGenerator {
             if (index % 137 == 0) value += 12000;
             transactions[index] = new Transaction(index + 1L, "C" + (index % 10000),
                     LocalDate.of(2024, 1, 1).plusDays(index % 365L), value,
-                    CATEGORIES[random.nextInt(CATEGORIES.length)], CITIES[random.nextInt(CITIES.length)], "PE",
+                    CATEGORIES[random.nextInt(CATEGORIES.length)], CITIES[random.nextInt(CITIES.length)], "SP",
                     index % 2 == 0 ? "DEBITO" : "CREDITO",
                     ESTABLISHMENTS[random.nextInt(ESTABLISHMENTS.length)],
                     PAYMENT_METHODS[random.nextInt(PAYMENT_METHODS.length)]);

@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gabriel - Estudo, Roteiro Prático e Perguntas</title>
+    <style>
+        :root {
+            --primary: #0284c7;
+            --primary-dark: #0369a1;
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #38bdf8;
+            --border: #334155;
+            --warning: #f59e0b;
+            --success: #10b981;
+            --code-bg: #090d16;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+            padding: 24px;
+            max-width: 980px;
+            margin: 0 auto;
+        }
+        header {
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .badge {
+            background: rgba(2, 132, 199, 0.2);
+            color: var(--accent);
+            padding: 5px 14px;
+            border-radius: 9999px;
+            font-size: 13px;
+            font-weight: 700;
+            border: 1px solid var(--primary);
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+        h1 { font-size: 26px; color: #fff; margin-bottom: 8px; }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 36px 0 18px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary);
+        }
+        .section-header h2 {
+            font-size: 22px;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .section-tag {
+            background: var(--primary);
+            color: #fff;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 3px 10px;
+            border-radius: 4px;
+        }
+        h3 { font-size: 18px; color: var(--accent); margin: 24px 0 10px 0; }
+        h4 { font-size: 16px; color: #e2e8f0; margin: 16px 0 8px 0; }
+        p { color: #cbd5e1; font-size: 15px; margin-bottom: 14px; }
+        ul, ol { padding-left: 22px; margin-bottom: 16px; }
+        li { color: #cbd5e1; font-size: 15px; margin-bottom: 8px; }
+        strong { color: #fff; }
+        code {
+            background: #090d16;
+            color: #38bdf8;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: Consolas, monospace;
+            font-size: 14px;
+        }
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 26px;
+            margin-bottom: 24px;
+        }
+        .box-simples {
+            background: rgba(14, 165, 233, 0.1);
+            border-left: 4px solid var(--accent);
+            padding: 16px 18px;
+            margin: 16px 0;
+            border-radius: 0 8px 8px 0;
+            color: #e0f2fe;
+            font-size: 15px;
+        }
+        .code-box {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px 18px;
+            font-family: Consolas, monospace;
+            font-size: 13.5px;
+            color: #38bdf8;
+            overflow-x: auto;
+            margin: 14px 0;
+            line-height: 1.6;
+        }
+        .box-explicacao {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px 18px;
+            margin-top: -6px;
+            margin-bottom: 18px;
+            font-size: 14.5px;
+            color: #cbd5e1;
+        }
+        .step-block {
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 18px;
+            margin-bottom: 18px;
+        }
+        .step-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+        .step-num {
+            background: var(--primary);
+            color: #fff;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+        }
+        .fala-box {
+            background: rgba(30, 41, 59, 0.9);
+            border-left: 4px solid var(--success);
+            padding: 14px 18px;
+            margin: 10px 0;
+            border-radius: 0 6px 6px 0;
+            color: #e2e8f0;
+            font-size: 14.5px;
+        }
+        .fala-box strong { color: #34d399; }
+        .acao-box {
+            background: rgba(2, 132, 199, 0.15);
+            border: 1px dashed var(--accent);
+            padding: 10px 14px;
+            border-radius: 6px;
+            margin: 10px 0;
+            color: #bae6fd;
+            font-size: 13.5px;
+        }
+        .acao-box strong { color: #fff; }
+        .pegadinha {
+            background: rgba(245, 158, 11, 0.1);
+            border-left: 4px solid var(--warning);
+            padding: 16px 18px;
+            border-radius: 0 8px 8px 0;
+            margin: 16px 0;
+        }
+        .pegadinha strong { color: var(--warning); }
+        .qa-card {
+            background: #141f33;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 18px;
+            margin-bottom: 16px;
+        }
+        .qa-question {
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 15.5px;
+            margin-bottom: 8px;
+        }
+        .qa-answer {
+            color: #cbd5e1;
+            font-size: 14px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 12px;
+            margin-top: 18px;
+            flex-wrap: wrap;
+        }
+        .nav-btn {
+            background: var(--card-bg);
+            color: var(--accent);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            font-size: 13.5px;
+            font-weight: 600;
+        }
+        .nav-btn:hover { background: var(--primary); color: #fff; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <span class="badge">Parte 1 de 3 &bull; Apresentação do Grupo</span>
+        <h1>Gabriel: O que o projeto faz, os dados e a soma/média</h1>
+        <p><strong>Arquivos da sua parte:</strong> <code>Transaction.java</code>, <code>TransactionGenerator.java</code> e <code>AgregacaoFinanceira.java</code></p>
+        <div class="nav-links">
+            <a href="APRESENTACAO_GERAL.html" class="nav-btn">&larr; Painel Geral do Grupo</a>
+            <a href="APRESENTACAO_RAFAEL.html" class="nav-btn">Guia do Rafael &rarr;</a>
+            <a href="APRESENTACAO_RENAN.html" class="nav-btn">Guia do Renan &rarr;</a>
+        </div>
+    </header>
+
+    <!-- ======================================================== -->
+    <!-- PARTE 1: ESTUDO                                          -->
+    <!-- ======================================================== -->
+    <div class="section-header">
+        <h2>Estudo</h2>
+        <span class="section-tag">Entenda a sua parte sem complicação</span>
+    </div>
+
+    <div class="card">
+        <p>Aqui está a explicação de cada parte do seu código em linguagem clara e direta. Você só precisa entender a ideia central para falar com calma e segurança.</p>
+
+        <h3>1. O que é o nosso projeto no fim das contas?</h3>
+        <p>Imagine que um banco tem <strong>milhões de compras de cartão</strong> e precisa calcular muito rápido:</p>
+        <ul>
+            <li>Quanto dinheiro foi movimentado no total;</li>
+            <li>Qual foi o valor médio das compras;</li>
+            <li>Qual foi a compra mais cara e a mais barata;</li>
+            <li>Quais compras parecem fraudes (compras suspeitas).</li>
+        </ul>
+        <p>Se você colocar <strong>uma pessoa só</strong> para somar 10 milhões de compras uma por uma, ela vai demorar bastante (isso é o <em>modo sequencial</em>).</p>
+        <p>Mas se você pegar essa lista de 10 milhões, cortar em 4 pedaços e entregar um pedaço para <strong>4 pessoas calcularem ao mesmo tempo</strong>, vai terminar muito mais rápido! No nosso programa, essas "pessoas" são as <strong>threads</strong> (núcleos do processador). Isso se chama <strong>Paralelismo de Dados</strong>.</p>
+        
+        <div class="box-simples">
+            <strong>Por que é fácil dividir esse trabalho em várias threads?</strong><br>
+            Porque uma compra não tem nada a ver com a outra! Para somar o valor da compra número 50, a thread não precisa saber o que aconteceu na compra número 49. Cada uma pode ser lida de forma totalmente independente.
+        </div>
+
+        <h3>2. A classe da compra: Transaction.java</h3>
+        <p>Esse arquivo é apenas o "molde" de cada transação. Cada compra tem 10 informações (ID, cliente, data, valor, categoria, cidade, estado, tipo, estabelecimento e forma de pagamento).</p>
+        
+        <div class="box-simples">
+            <strong>O detalhe que o professor vai gostar:</strong><br>
+            Todas as variáveis são <code>private final</code> e a classe <strong>não tem métodos set</strong> (só tem get).<br>
+            Isso significa que, depois que a compra é criada, <strong>ninguém consegue alterar o valor dela</strong>.<br>
+            Em programação paralela, isso é ótimo! Como os dados nunca mudam, várias threads podem ler as compras ao mesmo tempo na memória sem perigo de uma atrapalhar a outra ou corromper dados, e sem precisar colocar travas que deixam o programa lerdo.
+        </div>
+
+        <h3>3. O gerador de compras de teste: TransactionGenerator.java</h3>
+        <p>Como não podemos usar dados de clientes reais de um banco por questão de privacidade, criamos um gerador que inventa compras na hora. O professor pediu no enunciado para colocar <strong>4 tipos diferentes de compras</strong>:</p>
+        <div class="code-box">
+switch (index % 4) {
+    case 0 -> value = 20 + random.nextDouble() * 4980;                   // 1. Valores variados comuns
+    case 1 -> value = Math.max(10, 1800 + random.nextGaussian() * 1000); // 2. Compras em torno de uma média
+    case 2 -> value = 10 + (-Math.log(1 - random.nextDouble()) * 2200);  // 3. Maioria barata, poucas caras
+    default -> value = 300 + random.nextDouble() * 900;                  // 4. Compras de mercado e farmácia
+}
+if (index % 137 == 0) value += 12000; // Coloca uma compra bem cara de propósito
+        </div>
+        <div class="box-explicacao">
+            <strong>Como explicar esses 4 tipos de compras de forma simples:</strong><br>
+            &bull; <strong>1. Variada (Uniforme):</strong> Compras comuns entre R$ 20 e R$ 5.000 (qualquer valor tem a mesma chance).<br>
+            &bull; <strong>2. Na média (Normal/Gaussiana):</strong> A maioria das compras fica em torno de R$ 1.800, que é a média do dia a dia.<br>
+            &bull; <strong>3. Poucas caras (Exponencial):</strong> É como a vida real: a imensa maioria das compras é baratinha (um lanche, um café), e só de vez em quando alguém faz uma compra grandona.<br>
+            &bull; <strong>4. Compras rotineiras (Concentrada):</strong> Compras de supermercado ou farmácia entre R$ 300 e R$ 1.200.<br>
+            &bull; <strong>Compras suspeitas:</strong> A cada 137 compras, somamos R$ 12.000 para criar compras bem altas de propósito, para o Rafael testar o detector de fraudes dele!<br>
+            &bull; <strong>Cidades:</strong> Usamos as cidades da nossa região do Vale do Paraíba: <em>Jacareí, São José dos Campos, Caçapava, Taubaté e Santa Branca</em>.<br>
+            &bull; <strong>Por que usamos SplittableRandom?</strong> O gerador de números comum do Java (Random) fica travando quando roda rápido. O <code>SplittableRandom</code> é muito mais moderno e rápido para gerar milhões de dados.
+        </div>
+
+        <h3>4. Como calculamos a soma e a média: AgregacaoFinanceira.java</h3>
+        <p>Esse é o seu arquivo principal. Ele calcula 4 coisas: <strong>Soma total, Média, Maior valor e Menor valor</strong>.</p>
+
+        <h4>A. Modo Sequencial (com 1 thread só)</h4>
+        <p>É um laço <code>for</code> comum de 0 até o final. Uma thread faz tudo sozinha. Ele serve como o nosso <strong>tempo de comparação</strong> (o tempo base para sabermos se o modo paralelo foi mais rápido mesmo).</p>
+
+        <h4>B. Modo Paralelo (dividindo o bolo)</h4>
+        <p>Aqui nós dividimos a lista de transações em pedaços iguais para cada thread:</p>
+        <div class="code-box">
+int tamanhoBloco = (transacoes.length + quantidadeTarefas - 1) / quantidadeTarefas;
+        </div>
+        <div class="box-explicacao">
+            <strong>Por que essa continha aí?</strong><br>
+            Se você tem 10 compras e 4 threads, uma divisão normal em Java faz <code>10 / 4 = 2</code>. Quatro threads fariam <code>4 x 2 = 8</code> e duas compras ficariam esquecidas fora da conta!<br>
+            Essa continha <code>(N + T - 1) / T</code> arredonda sempre para cima. Assim, as três primeiras threads pegam 3 compras e a última pega 1. <strong>Nenhuma compra fica de fora</strong>.
+        </div>
+
+        <h4>C. Como as threads trabalham sem bater cabeça:</h4>
+        <p>Cada thread roda a sua própria tarefa (<code>Callable&lt;Resultado&gt;</code>):</p>
+        <ul>
+            <li>Cada thread cria a sua própria caixinha de resultado (<code>Resultado parcial</code>).</li>
+            <li>Ela soma o pedaço dela em silêncio, sem mexer na memória de nenhuma outra thread.</li>
+            <li>Quando todas terminam, a thread principal pega as caixinhas de cada uma e <strong>junta tudo</strong> no método <code>mesclar()</code>: soma os totais, pega o maior valor entre eles e recalcula a média final.</li>
+            <li>No final, fechamos o pool com <code>executor.shutdown()</code> para não deixar threads perdidas consumindo memória do computador.</li>
+        </ul>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- PARTE 2: ROTEIRO PRÁTICO                                 -->
+    <!-- ======================================================== -->
+    <div class="section-header">
+        <h2>Roteiro Prático</h2>
+        <span class="section-tag">O que falar e o que mostrar na tela</span>
+    </div>
+
+    <div class="card">
+        <p>Siga estes passos na hora da sua apresentação. Fale com calma e naturalidade. Você tem de <strong>3 a 4 minutos</strong>.</p>
+
+        <!-- Etapa 1 -->
+        <div class="step-block">
+            <div class="step-title">
+                <span class="step-num">1</span>
+                Abertura e Apresentação do Grupo
+            </div>
+            <div class="acao-box">
+                <strong>O que mostrar na tela:</strong> Fique com o VS Code aberto mostrando as pastas do projeto na esquerda.
+            </div>
+            <div class="fala-box">
+                <strong>O que falar:</strong><br>
+                "Bom dia/boa tarde, professor. O nosso trabalho é sobre processamento paralelo de transações financeiras em Java.<br><br>
+                O nosso grupo é formado por 3 alunos: eu, o Rafael e o Renan. Nós usamos o conceito de <strong>paralelismo de dados</strong>, que significa pegar um volume enorme de compras de cartão e dividir em fatias para vários núcleos do processador somarem e analisarem ao mesmo tempo.<br><br>
+                Eu sou o primeiro a falar e fiquei responsável por três partes: o modelo da transação, o gerador de compras com 4 distribuições estatísticas e o módulo de soma, média e valores máximos e mínimos."
+            </div>
+        </div>
+
+        <!-- Etapa 2 -->
+        <div class="step-block">
+            <div class="step-title">
+                <span class="step-num">2</span>
+                Mostrando o arquivo Transaction.java
+            </div>
+            <div class="acao-box">
+                <strong>O que mostrar na tela:</strong> Abra o arquivo <code>src/main/java/app/Transaction.java</code> e aponte o mouse para os atributos no topo.
+            </div>
+            <div class="fala-box">
+                <strong>O que falar:</strong><br>
+                "Aqui no <code>Transaction.java</code> nós temos os 10 campos que o senhor pediu na prova: identificador, cliente, data, valor, categoria, cidade, estado, tipo, estabelecimento e forma de pagamento.<br><br>
+                O ponto mais importante que nós planejamos aqui é que todos os campos são <strong>private final</strong> e não colocamos nenhum método set. Isso faz com que a transação seja <strong>imutável</strong>. Em programação concorrente, objetos imutáveis são muito seguros: várias threads podem ler a mesma compra ao mesmo tempo na memória sem perigo de dar erro ou dado corrompido, e sem precisar de travas que deixariam o programa lento."
+            </div>
+        </div>
+
+        <!-- Etapa 3 -->
+        <div class="step-block">
+            <div class="step-title">
+                <span class="step-num">3</span>
+                Mostrando o arquivo TransactionGenerator.java
+            </div>
+            <div class="acao-box">
+                <strong>O que mostrar na tela:</strong> Abra <code>src/main/java/app/TransactionGenerator.java</code> e mostre o trecho do <code>switch (index % 4)</code>.
+            </div>
+            <div class="fala-box">
+                <strong>O que falar:</strong><br>
+                "No <code>TransactionGenerator.java</code>, criamos os dados de teste usando a classe <code>SplittableRandom</code>, que é bem mais rápida que o Random tradicional.<br><br>
+                Para simular a realidade de um banco, implementamos as <strong>quatro distribuições estatísticas</strong> pedidas no trabalho:
+                <br>1. Compras com valores variados comuns (distribuição uniforme);
+                <br>2. Compras em torno de uma média de R$ 1.800 (distribuição normal em sino);
+                <br>3. Compras com a maioria em valores baixos e poucas compras bem caras (distribuição exponencial);
+                <br>4. E compras comuns de supermercado e farmácia (distribuição concentrada).<br><br>
+                Também colocamos as cidades da nossa região (Jacareí, São José dos Campos, Caçapava, Taubaté e Santa Branca) e injetamos compras acima de R$ 12.000 de propósito para o detector de fraudes do Rafael testar."
+            </div>
+        </div>
+
+        <!-- Etapa 4 -->
+        <div class="step-block">
+            <div class="step-title">
+                <span class="step-num">4</span>
+                Mostrando o arquivo AgregacaoFinanceira.java
+            </div>
+            <div class="acao-box">
+                <strong>O que mostrar na tela:</strong> Abra <code>src/main/java/app/AgregacaoFinanceira.java</code> e mostre o método <code>executarParalelo()</code>.
+            </div>
+            <div class="fala-box">
+                <strong>O que falar:</strong><br>
+                "Aqui em <code>AgregacaoFinanceira.java</code> nós fazemos os cálculos numéricos.<br><br>
+                Temos o método sequencial com 1 thread só, que usamos de base para comparar o tempo.<br><br>
+                E no método paralelo, nós dividimos o vetor em blocos contíguos usando uma fórmula de teto para garantir que nenhuma transação fique de fora da conta. Cada thread roda a sua própria tarefa com <code>Callable</code> e acumula sua soma e seus valores máximo e mínimo na sua própria caixinha de resultado.<br><br>
+                Elas não brigam por memória. Quando todas terminam, a thread principal junta esses resultados no método <code>mesclar()</code> e fecha o pool com <code>executor.shutdown()</code>."
+            </div>
+        </div>
+
+        <!-- Etapa 5 -->
+        <div class="step-block">
+            <div class="step-title">
+                <span class="step-num">5</span>
+                Passando a palavra para o Rafael
+            </div>
+            <div class="fala-box">
+                <strong>O que falar:</strong><br>
+                "Agora que a base dos dados e as contas de soma e média estão explicadas, vou passar a palavra para o <strong>Rafael</strong>, que vai mostrar a detecção de transações suspeitas e o agrupamento por categorias."
+            </div>
+        </div>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- PARTE 3: PERGUNTAS                                       -->
+    <!-- ======================================================== -->
+    <div class="section-header">
+        <h2>Perguntas</h2>
+        <span class="section-tag">Perguntas do professor e alterações ao vivo</span>
+    </div>
+
+    <div class="card">
+        <p>Aqui estão as perguntas que o professor mais costuma fazer, explicadas do jeito mais direto possível.</p>
+
+        <div class="qa-card">
+            <div class="qa-question">1. Por que você usou Callable em vez de Runnable nas threads?</div>
+            <div class="qa-answer">
+                <strong>Como responder:</strong> "Porque o <code>Runnable</code> não devolve nada (o método <code>run()</code> dele é <code>void</code>). Como cada thread estava somando um pedaço das compras, cada uma precisava devolver a sua caixinha de resultado com a soma e o maior valor para a thread principal. O <code>Callable</code> permite retornar um objeto, que a gente pega facilmente com o <code>Future.get()</code>."
+            </div>
+        </div>
+
+        <div class="qa-card">
+            <div class="qa-question">2. Por que você não criou uma Thread para cada compra do vetor?</div>
+            <div class="qa-answer">
+                <strong>Como responder:</strong> "Porque se tivermos 1 milhão de compras e tentarmos criar 1 milhão de threads, o computador trava e dá erro de falta de memória (OutOfMemoryError). As threads do Java gastam memória e tempo do sistema para serem criadas. O jeito certo é criar poucas threads (de acordo com a quantidade de núcleos da máquina, como 2, 4 ou 8) e dividir a lista de compras em blocos entre elas."
+            </div>
+        </div>
+
+        <div class="qa-card">
+            <div class="qa-question">3. Por que você não precisou usar synchronized na hora de somar?</div>
+            <div class="qa-answer">
+                <strong>Como responder:</strong> "Porque cada thread tem a sua própria variável de soma dentro do método dela. Nenhuma thread mexe na variável da outra. Como não tem duas threads tentando escrever no mesmo lugar ao mesmo tempo, não tem perigo de erro e não precisa de travas (synchronized). A junção das somas só é feita no finalzinho, por uma thread só."
+            </div>
+        </div>
+
+        <div class="pegadinha">
+            <strong>Alteração ao vivo provável:</strong> <em>"Gabriel, mude o código para calcular a média apenas das compras feitas no CARTAO."</em><br><br>
+            <strong>O que fazer:</strong><br>
+            1. Abra <code>AgregacaoFinanceira.java</code>;<br>
+            2. Vá na linha 95 (dentro do <code>for</code> da <code>TarefaAgregacao</code>);<br>
+            3. Coloque um <code>if</code> antes do <code>acumular</code>:<br>
+            <code>if ("CARTAO".equalsIgnoreCase(transacoes[i].getMetodoPagamento())) {</code><br>
+            <code>&nbsp;&nbsp;&nbsp;&nbsp;resultadoParcial.acumular(transacoes[i].getValue());</code><br>
+            <code>}</code>
+        </div>
+
+        <div class="pegadinha">
+            <strong>Alteração ao vivo provável:</strong> <em>"Gabriel, como mudar a média para não contar a compra mais cara?"</em><br><br>
+            <strong>O que fazer:</strong><br>
+            Na linha 59 de <code>AgregacaoFinanceira.java</code>, no método <code>getMedia()</code>, mude de:<br>
+            <code>return total / quantidade;</code><br>
+            Para:<br>
+            <code>return quantidade > 1 ? (total - maiorValor) / (quantidade - 1) : 0.0;</code>
+        </div>
+    </div>
+
+</body>
+</html>

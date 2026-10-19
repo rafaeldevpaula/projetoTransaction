@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rafael - Estudo, Roteiro Prático e Perguntas</title>
+    <style>
+        :root {
+            --primary: #059669;
+            --primary-dark: #047857;
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #34d399;
+            --border: #334155;
+            --warning: #f59e0b;
+            --success: #10b981;
+            --code-bg: #090d16;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+            padding: 24px;
+            max-width: 980px;
+            margin: 0 auto;
+        }
+        header {
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .badge {
+            background: rgba(5, 150, 105, 0.2);
+            color: var(--accent);
+            padding: 5px 14px;
+            border-radius: 9999px;
+            font-size: 13px;
+            font-weight: 700;
+            border: 1px solid var(--primary);
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+        h1 { font-size: 26px; color: #fff; margin-bottom: 8px; }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 36px 0 18px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary);
+        }
+        .section-header h2 {
+            font-size: 22px;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .section-tag {
+            background: var(--primary);
+            color: #fff;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 3px 10px;
+            border-radius: 4px;
+        }
+        h3 { font-size: 18px; color: var(--accent); margin: 24px 0 10px 0; }
+        h4 { font-size: 16px; color: #e2e8f0; margin: 16px 0 8px 0; }
+        p { color: #cbd5e1; font-size: 15px; margin-bottom: 14px; }
+        ul, ol { padding-left: 22px; margin-bottom: 16px; }
+        li { color: #cbd5e1; font-size: 15px; margin-bottom: 8px; }
+        strong { color: #fff; }
+        code {
+            background: #090d16;
+            color: #34d399;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: Consolas, monospace;
+            font-size: 14px;
+        }
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 26px;
+            margin-bottom: 24px;
+        }
+        .box-simples {
+            background: rgba(5, 150, 105, 0.1);
+            border-left: 4px solid var(--accent);
+            padding: 16px 18px;
+            margin: 16px 0;
+            border-radius: 0 8px 8px 0;
+            color: #d1fae5;
+            font-size: 15px;
+        }
+        .code-box {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px 18px;
+            font-family: Consolas, monospace;
+            font-size: 13.5px;
+            color: #34d399;
+            overflow-x: auto;
+            margin: 14px 0;
+            line-height: 1.6;
+        }
+        .box-explicacao {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px 18px;
+            margin-top: -6px;
+            margin-bottom: 18px;
+            font-size: 14.5px;
+            color: #cbd5e1;
+        }
+        .step-block {
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 18px;
+            margin-bottom: 18px;
+        }
+        .step-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+        .step-num {
+            background: var(--primary);
+            color: #fff;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+        }
+        .fala-box {
+            background: rgba(30, 41, 59, 0.9);
+            border-left: 4px solid var(--accent);
+            padding: 14px 18px;
+            margin: 10px 0;
+            border-radius: 0 6px 6px 0;
+            color: #e2e8f0;
+            font-size: 14.5px;
+        }
+        .fala-box strong { color: #34d399; }
+        .acao-box {
+            background: rgba(5, 150, 105, 0.15);
+            border: 1px dashed var(--accent);
+            padding: 10px 14px;
+            border-radius: 6px;
+            margin: 10px 0;
+            color: #a7f3d0;
+            font-size: 13.5px;
+        }
+        .acao-box strong { color: #fff; }
+        .pegadinha {
+            background: rgba(245, 158, 11, 0.1);
+            border-left: 4px solid var(--warning);
+            padding: 16px 18px;
+            border-radius: 0 8px 8px 0;
+            margin: 16px 0;
+        }
+        .pegadinha strong { color: var(--warning); }
+        .qa-card {
+            background: #141f33;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 18px;
+            margin-bottom: 16px;
+        }
+        .qa-question {
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 15.5px;
+            margin-bottom: 8px;
+        }
+        .qa-answer {
+            color: #cbd5e1;
+            font-size: 14px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 12px;
+            margin-top: 18px;
+            flex-wrap: wrap;
+        }
+        .nav-btn {
+            background: var(--card-bg);
+            color: var(--accent);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            font-size: 13.5px;
+            font-weight: 600;
+        }
+        .nav-btn:hover { background: var(--primary); color: #fff; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <span class="badge">Parte 2 de 3 &bull; Apresentação do Grupo</span>
+        <h1>Rafael: Compras Suspeitas e Agrupamento por Categorias</h1>
+        <p><strong>Arquivos da sua parte:</strong> <code>DetectorTransacoesSuspeitas.java</code>, <code>EstatisticasPorCategoria.java</code> e <code>CategoryStats.java</code></p>
+        <div class="nav-links">
+            <a href="APRESENTACAO_GERAL.html" class="nav-btn">&larr; Painel Geral do Grupo</a>
+            <a href="APRESENTACAO_GABRIEL.html" class="nav-btn">&larr; Guia do Gabriel</a>
+            <a href="APRESENTACAO_RENAN.html" class="nav-btn">Guia do Renan &rarr;</a>
+        </div>
+    </header>
+
+    <!-- ======================================================== -->
+    <!-- PARTE 1: ESTUDO                                          -->
+    <!-- ======================================================== -->
+    <div class="section-header">
+        <h2>Estudo</h2>
+        <span class="section-tag">Entenda a sua parte sem complicação</span>
+    </div>
+
+    <div class="card">
+        <p>Aqui está a explicação de toda a lógica da sua parte de forma simples e direta, para você falar com total tranquilidade.</p>
+
+        <h3>1. O que você faz no projeto?</h3>
+        <p>Depois que o Gabriel gerou os dados e mostrou como somar o total, você entra com a parte de <strong>análise inteligente de negócio</strong>:</p>
+        <ul>
+            <li><strong>Filtro de Fraude / Suspeitas:</strong> Descobrir quais compras são perigosas e quanto dinheiro está em risco.</li>
+            <li><strong>Estatísticas por Categoria:</strong> Dizer quanto foi gasto em cada uma das 5 categorias (Alimentação, Transporte, Eletrônicos, Saúde e Educação) e nas cidades da região.</li>
+        </ul>
+
+        <h3>2. O Detector de Suspeitas: DetectorTransacoesSuspeitas.java</h3>
+        <p>O professor pediu regras para encontrar compras anômalas no meio de milhões. Nós criamos duas regras bem claras no método <code>ehSuspeita()</code>:</p>
+        <div class="code-box">
+// Regra 1: Qualquer compra acima de R$ 10.000 é suspeita
+if (t.getValue() > 10000.0) return true;
+
+// Regra 2: Qualquer compra acima de R$ 5.000 em Eletrônicos é suspeita
+if ("Eletrônicos".equalsIgnoreCase(t.getCategory()) && t.getValue() > 5000.0) {
+    return true;
+}
+        </div>
+        <div class="box-explicacao">
+            <strong>Por que essas duas regras fazem sentido?</strong><br>
+            &bull; <strong>Regra 1:</strong> Compras de mais de 10 mil reais fogem do padrão de compras comuns de cartão de pessoa física. O banco precisa auditar.<br>
+            &bull; <strong>Regra 2:</strong> A categoria "Eletrônicos" é onde mais acontece golpe (comprar iPhone, notebook ou televisão para revender rápido). Por isso, se passar de 5 mil reais em eletrônicos, já acende o alerta!<br><br>
+            <strong>Como roda em paralelo:</strong> Da mesma forma que na agregação, cada thread olha o seu pedaço de compras e conta quantas suspeitas achou e qual o valor total dessas compras. No final, o método <code>mesclar()</code> junta os números de todas as threads.
+        </div>
+
+        <h3>3. O grande segredo: como agrupar categorias sem deixar o programa lerdo</h3>
+        <p>A prova pede para agrupar as compras pelas 5 categorias: <strong>Alimentação, Transporte, Eletrônicos, Saúde e Educação</strong>.</p>
+        
+        <div class="box-simples">
+            <strong>A metáfora do bloquinho de anotações (muito fácil de explicar!):</strong><br>
+            Imagine 4 pessoas numa sala tentando escrever ao mesmo tempo no <strong>mesmo caderninho</strong> com 5 linhas (as 5 categorias). Uma vai ter que esperar a outra terminar de escrever para poder rabiscar. Isso se chama <em>concorrência e trava</em>, e deixa o computador muito lerdo!<br><br>
+            <strong>O que nós fizemos de inteligente?</strong><br>
+            Demos <strong>um caderninho próprio (um Map local) para cada thread</strong>. Cada uma anota suas compras no seu próprio caderninho, super rápido e sem ninguém atrapalhar ninguém. Quando todas terminam de ler, a thread principal pega os 4 caderninhos e passa tudo a limpo para o caderno final (o método <code>mesclarMapas</code>). Isso faz o código rodar na velocidade máxima!
+        </div>
+
+        <h3>4. A classe que guarda os dados de cada categoria: CategoryStats.java</h3>
+        <p>Cada categoria no mapa tem um objeto <code>CategoryStats</code> que guarda 3 números simples:</p>
+        <ul>
+            <li><code>count</code>: quantas compras foram feitas naquela categoria;</li>
+            <li><code>total</code>: quanto dinheiro deu a soma de tudo naquela categoria;</li>
+            <li><code>max</code>: qual foi a compra mais cara daquela categoria.</li>
+        </ul>
+        <div class="box-explicacao">
+            <strong>Dois detalhes bem legais para você citar:</strong><br>
+            1. <strong>Por que o maior valor começa com NEGATIVE_INFINITY?</strong> Porque se começássemos com zero e houvesse algum valor zerado ou negativo, poderia dar erro. Começando no menor valor possível da matemática, a primeira compra já vira o maior valor com certeza.<br>
+            2. <strong>Cálculo da média na hora de ler:</strong> A média não é calculada a cada compra adicionada. O método <code>getAverage()</code> só faz a conta <code>total / count</code> no momento em que vamos gerar o relatório final na tela. Isso evita erros de arredondamento.
+        </div>
+
+        <h3>5. Cidades do Vale do Paraíba</h3>
+        <p>Além das 5 categorias, aplicamos exatamente essa mesma lógica de mapas locais para somar as compras nas cidades da região: <strong>Jacareí, São José dos Campos, Caçapava, Taubaté e Santa Branca</strong>.</p>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- PARTE 2: ROTEIRO PRÁTICO                                 -->
+    <!-- ======================================================== -->
+    <div class="section-header">
+        <h2>Roteiro Prático</h2>
+        <span class="section-tag">O que falar e o que mostrar na tela</span>
+    </div>
+
+    <div class="card">
+        <p>Siga estes passos na hora da sua apresentação. Fale com calma e clareza. Você tem de <strong>3 a 4 minutos</strong>.</p>
+
+        <!-- Etapa 1 -->
+        <div class="step-block">
+            <div class="step-title">
+                <span class="step-num">1</span>
+                Pegando a palavra e se apresentando
+            </div>
+            <div class="fala-box">
+                <strong>O que falar:</strong><br>
+                "Obrigado, Gabriel. Bom dia/boa tarde, professor. Eu sou o Rafael e fiquei responsável pelas regras analíticas de negócio do nosso sistema.<br><br>
+                Depois que os dados foram gerados e agregados, o sistema precisa responder a duas perguntas essenciais de um banco: quais compras têm risco de fraude e quanto dinheiro foi gasto por categoria e por cidade da nossa região."
+            </div>
+        </div>
+
+        <!-- Etapa 2 -->
+        <div class="step-block">
+            <div class="step-title">
+                <span class="step-num">2</span>
+                Mostrando o DetectorTransacoesSuspeitas.java
+            </div>
+            <div class="acao-box">
+                <strong>O que mostrar na tela:</strong> Abra <code>src/main/java/app/DetectorTransacoesSuspeitas.java</code> e aponte o mouse para o método <code>ehSuspeita()</code>.
+            </div>
+            <div class="fala-box">
+                <strong>O que falar:</strong><br>
+                "Abrindo aqui o <code>DetectorTransacoesSuspeitas.java</code>, temos o método <code>ehSuspeita()</code>. Ele avalia duas regras práticas de segurança:
+                <br>1. Qualquer compra com valor acima de R$ 10.000 é marcada como suspeita porque ultrapassa o limite comum do dia a dia;
+                <br>2. Compras acima de R$ 5.000 na categoria 'Eletrônicos' também são marcadas, já que celulares e notebooks são os itens com maior risco de fraude.<br><br>
+                Na execução paralela, cada thread conta as compras suspeitas da sua fatia e guarda também o valor total desse dinheiro em risco na classe <code>Resultado</code>, juntando os valores no método <code>mesclar()</code> no final sem concorrência."
+            </div>
+        </div>
+
+        <!-- Etapa 3 -->
+        <div class="step-block">
+            <div class="step-title">
+                <span class="step-num">3</span>
+                Mostrando o CategoryStats.java e EstatisticasPorCategoria.java
+            </div>
+            <div class="acao-box">
+                <strong>O que mostrar na tela:</strong> Abra <code>src/main/java/app/CategoryStats.java</code> rapidamente e depois vá para <code>src/main/java/app/EstatisticasPorCategoria.java</code>, mostrando o método <code>mesclarMapas()</code>.
+            </div>
+            <div class="fala-box">
+                <strong>O que falar:</strong><br>
+                "Agora chegamos ao agrupamento pelas 5 categorias pedidas na prova: Alimentação, Transporte, Eletrônicos, Saúde e Educação.<br><br>
+                Aqui tivemos um cuidado essencial de desempenho: <strong>nós não usamos um ConcurrentHashMap compartilhado entre as threads</strong>. Se 4 ou 8 threads tentassem atualizar as mesmas 5 categorias ao mesmo tempo no mesmo mapa, elas ficariam travando umas às outras.<br><br>
+                A nossa estratégia foi: cada thread cria o seu próprio <code>HashMap</code> local e preenche seus dados isoladamente. Quando todas terminam, a thread principal junta esses mapas aqui no método <code>mesclarMapas()</code> chamando o <code>CategoryStats.merge()</code>. Com isso, temos a contagem, o total financeiro, a compra mais cara e a média de cada categoria com velocidade máxima e zero conflitos.<br><br>
+                Fizemos isso também para as cidades do Vale do Paraíba: Jacareí, São José dos Campos, Caçapava, Taubaté e Santa Branca."
+            </div>
+        </div>
+
+        <!-- Etapa 4 -->
+        <div class="step-block">
+            <div class="step-title">
+                <span class="step-num">4</span>
+                Passando a palavra para o Renan
+            </div>
+            <div class="fala-box">
+                <strong>O que falar:</strong><br>
+                "Agora que as suspeitas e os agrupamentos por categoria e cidade estão explicados, vou passar a palavra para o <strong>Renan</strong>, que vai rodar o programa no terminal, mostrar as métricas de Speedup e Eficiência, explicar o aquecimento do Java e a afinidade de processador."
+            </div>
+        </div>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- PARTE 3: PERGUNTAS                                       -->
+    <!-- ======================================================== -->
+    <div class="section-header">
+        <h2>Perguntas</h2>
+        <span class="section-tag">Perguntas do professor e alterações ao vivo</span>
+    </div>
+
+    <div class="card">
+        <p>Aqui estão as perguntas que o professor mais costuma fazer, explicadas de forma simples e direta.</p>
+
+        <div class="qa-card">
+            <div class="qa-question">1. Por que você preferiu mapas locais em vez de usar ConcurrentHashMap?</div>
+            <div class="qa-answer">
+                <strong>Como responder:</strong> "Porque temos milhões de transações, mas apenas 5 categorias. Se colocássemos um ConcurrentHashMap compartilhado, as 4 ou 8 threads ficariam disputando o acesso às mesmas 5 chaves ao mesmo tempo o tempo todo. Essa briga por travas na memória deixa o programa lento. Usando um mapa local para cada thread, cada núcleo processa sua parte livremente e a junção no final leva menos de um milissegundo."
+            </div>
+        </div>
+
+        <div class="qa-card">
+            <div class="qa-question">2. O que aconteceria se a variável 'max' de CategoryStats começasse valendo 0.0?</div>
+            <div class="qa-answer">
+                <strong>Como responder:</strong> "Se por algum motivo todas as compras de uma categoria fossem zero ou valores negativos (como cancelamentos ou estornos), o sistema continuaria dizendo que o maior valor foi 0.0 de forma errada. Começando em <code>Double.NEGATIVE_INFINITY</code>, qualquer número real existente é maior que ele, garantindo que o primeiro valor lido seja aceito corretamente."
+            </div>
+        </div>
+
+        <div class="qa-card">
+            <div class="qa-question">3. O método mesclarMapas() tem perigo de condição de corrida?</div>
+            <div class="qa-answer">
+                <strong>Como responder:</strong> "Não tem nenhum perigo, professor, porque o <code>mesclarMapas()</code> só é chamado <em>depois</em> que todas as threads já terminaram seu trabalho (garantido pelo <code>Future.get()</code>). Ele roda sequencialmente na thread principal, somando os dados dos mapas de cada thread com total segurança."
+            </div>
+        </div>
+
+        <div class="pegadinha">
+            <strong>Alteração ao vivo provável:</strong> <em>"Rafael, mude o critério: agora compras na categoria Saúde acima de R$ 3.000 também devem ser consideradas suspeitas."</em><br><br>
+            <strong>O que fazer:</strong><br>
+            1. Abra <code>DetectorTransacoesSuspeitas.java</code>;<br>
+            2. Vá no método <code>ehSuspeita()</code> (linha 20);<br>
+            3. Adicione este <code>if</code>:<br>
+            <code>if ("Saúde".equalsIgnoreCase(t.getCategory()) && t.getValue() > 3000.0) {</code><br>
+            <code>&nbsp;&nbsp;&nbsp;&nbsp;return true;</code><br>
+            <code>}</code>
+        </div>
+
+        <div class="pegadinha">
+            <strong>Alteração ao vivo provável:</strong> <em>"Rafael, como fazer para considerar suspeitas apenas as compras feitas em Jacareí?"</em><br><br>
+            <strong>O que fazer:</strong><br>
+            No começo do método <code>ehSuspeita()</code>, adicione:<br>
+            <code>if (!"Jacareí".equalsIgnoreCase(t.getCity())) return false;</code>
+        </div>
+    </div>
+
+</body>
+</html>

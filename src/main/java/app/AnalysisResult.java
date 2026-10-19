@@ -23,7 +23,7 @@ public final class AnalysisResult {
     private final String[] paymentMethodNames = {"CARTAO", "BOLETO", "DINHEIRO", "CARTEIRA_DIGITAL"};
     private final CategoryStats[] paymentMethods = new CategoryStats[paymentMethodNames.length];
 
-    private final String[] cityNames = {"Recife", "Olinda", "Jaboatao", "Paulista", "Caruaru"};
+    private final String[] cityNames = {"Jacareí", "São José dos Campos", "Caçapava", "Taubaté", "Santa Branca"};
     private final CategoryStats[] cities = new CategoryStats[cityNames.length];
 
     public void accept(Transaction transaction) {

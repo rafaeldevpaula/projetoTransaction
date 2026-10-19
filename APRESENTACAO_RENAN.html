@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Renan - Estudo, Roteiro Prático e Perguntas</title>
+    <style>
+        :root {
+            --primary: #7c3aed;
+            --primary-dark: #6d28d9;
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #c084fc;
+            --border: #334155;
+            --warning: #f59e0b;
+            --success: #10b981;
+            --code-bg: #090d16;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+            padding: 24px;
+            max-width: 980px;
+            margin: 0 auto;
+        }
+        header {
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .badge {
+            background: rgba(124, 58, 237, 0.2);
+            color: var(--accent);
+            padding: 5px 14px;
+            border-radius: 9999px;
+            font-size: 13px;
+            font-weight: 700;
+            border: 1px solid var(--primary);
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+        h1 { font-size: 26px; color: #fff; margin-bottom: 8px; }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 36px 0 18px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary);
+        }
+        .section-header h2 {
+            font-size: 22px;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .section-tag {
+            background: var(--primary);
+            color: #fff;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 3px 10px;
+            border-radius: 4px;
+        }
+        h3 { font-size: 18px; color: var(--accent); margin: 24px 0 10px 0; }
+        h4 { font-size: 16px; color: #e2e8f0; margin: 16px 0 8px 0; }
+        p { color: #cbd5e1; font-size: 15px; margin-bottom: 14px; }
+        ul, ol { padding-left: 22px; margin-bottom: 16px; }
+        li { color: #cbd5e1; font-size: 15px; margin-bottom: 8px; }
+        strong { color: #fff; }
+        code {
+            background: #090d16;
+            color: #c084fc;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: Consolas, monospace;
+            font-size: 14px;
+        }
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 26px;
+            margin-bottom: 24px;
+        }
+        .box-simples {
+            background: rgba(124, 58, 237, 0.1);
+            border-left: 4px solid var(--accent);
+            padding: 16px 18px;
+            margin: 16px 0;
+            border-radius: 0 8px 8px 0;
+            color: #f3e8ff;
+            font-size: 15px;
+        }
+        .code-box {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px 18px;
+            font-family: Consolas, monospace;
+            font-size: 13.5px;
+            color: #c084fc;
+            overflow-x: auto;
+            margin: 14px 0;
+            line-height: 1.6;
+        }
+        .box-explicacao {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px 18px;
+            margin-top: -6px;
+            margin-bottom: 18px;
+            font-size: 14.5px;
+            color: #cbd5e1;
+        }
+        .step-block {
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 18px;
+            margin-bottom: 18px;
+        }
+        .step-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+        .step-num {
+            background: var(--primary);
+            color: #fff;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+        }
+        .fala-box {
+            background: rgba(30, 41, 59, 0.9);
+            border-left: 4px solid var(--accent);
+            padding: 14px 18px;
+            margin: 10px 0;
+            border-radius: 0 6px 6px 0;
+            color: #e2e8f0;
+            font-size: 14.5px;
+        }
+        .fala-box strong { color: #c084fc; }
+        .acao-box {
+            background: rgba(124, 58, 237, 0.15);
+            border: 1px dashed var(--accent);
+            padding: 10px 14px;
+            border-radius: 6px;
+            margin: 10px 0;
+            color: #e9d5ff;
+            font-size: 13.5px;
+        }
+        .acao-box strong { color: #fff; }
+        .pegadinha {
+            background: rgba(245, 158, 11, 0.1);
+            border-left: 4px solid var(--warning);
+            padding: 16px 18px;
+            border-radius: 0 8px 8px 0;
+            margin: 16px 0;
+        }
+        .pegadinha strong { color: var(--warning); }
+        .qa-card {
+            background: #141f33;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 18px;
+            margin-bottom: 16px;
+        }
+        .qa-question {
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 15.5px;
+            margin-bottom: 8px;
+        }
+        .qa-answer {
+            color: #cbd5e1;
+            font-size: 14px;
+        }
+        .math-block {
+            background: #090d16;
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--accent);
+            border-radius: 8px;
+            padding: 12px 18px;
+            margin: 10px 0 12px 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 17px;
+            color: #f1f5f9;
+        }
+        .math-var {
+            font-style: italic;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        .math-frac {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            vertical-align: middle;
+            text-align: center;
+            font-size: 15px;
+        }
+        .math-top {
+            border-bottom: 2px solid #94a3b8;
+            padding: 0 6px 2px 6px;
+            width: 100%;
+        }
+        .math-bottom {
+            padding: 2px 6px 0 6px;
+            width: 100%;
+        }
+        .math-example {
+            color: #cbd5e1;
+            font-size: 14px;
+            margin-top: 6px;
+            background: rgba(15, 23, 42, 0.4);
+            padding: 8px 12px;
+            border-radius: 6px;
+            border-left: 3px solid var(--border);
+        }
+        .math-example strong { color: #38bdf8; }
+        .nav-links {
+            display: flex;
+            gap: 12px;
+            margin-top: 18px;
+            flex-wrap: wrap;
+        }
+        .nav-btn {
+            background: var(--card-bg);
+            color: var(--accent);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            font-size: 13.5px;
+            font-weight: 600;
+        }
+        .nav-btn:hover { background: var(--primary); color: #fff; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <span class="badge">Parte 3 de 3 &bull; Apresentação do Grupo</span>
+        <h1>Renan: Medição de Tempo, Gráficos, Speedup e Afinidade de CPU</h1>
+        <p><strong>Arquivos da sua parte:</strong> <code>Main.java</code>, <code>HtmlReport.java</code> e <code>AffinitySupport.java</code></p>
+        <div class="nav-links">
+            <a href="APRESENTACAO_GERAL.html" class="nav-btn">&larr; Painel Geral do Grupo</a>
+            <a href="APRESENTACAO_GABRIEL.html" class="nav-btn">&larr; Guia do Gabriel</a>
+            <a href="APRESENTACAO_RAFAEL.html" class="nav-btn">&larr; Guia do Rafael</a>
+        </div>
+    </header>
+
+    <!-- ======================================================== -->
+    <!-- PARTE 1: ESTUDO                                          -->
+    <!-- ======================================================== -->
+    <div class="section-header">
+        <h2>Estudo</h2>
+        <span class="section-tag">Entenda a sua parte sem complicação</span>
+    </div>
+
+    <div class="card">
+        <p>Aqui está a explicação de toda a lógica do seu código em linguagem clara e direta para você entender como o computador se comporta durante os testes.</p>
+
+        <h3>1. O que você faz no projeto?</h3>
+        <p>Você é quem junta tudo e comprova na prática se o programa ficou rápido mesmo! Sua parte é responsável por:</p>
+        <ul>
+            <li>Rodar o teste oficial com 1, 2, 4 e 8 threads;</li>
+            <li>Medir o tempo com precisão científica;</li>
+            <li>Calcular o <strong>Speedup</strong> (quantas vezes acelerou) e a <strong>Eficiência</strong>;</li>
+            <li>Explicar a <strong>Afinidade de CPU</strong> e mostrar o relatório visual <code>resultados.html</code>.</li>
+        </ul>
+
+        <h3>2. O que é o tal do "Aquecimento" (Warm-up) e por que ele é obrigatório?</h3>
+        <p>Quando você dá play num programa Java, ele começa um pouco mais lento porque o Java está apenas interpretando o código. Conforme o código vai rodando várias e várias vezes, o Java percebe quais partes são mais usadas e compila elas para código de máquina nativo super rápido.</p>
+        
+        <div class="box-simples">
+            <strong>A metáfora do carro esportivo no inverno:</strong><br>
+            Se você ligar um carro frio e acelerar com tudo na hora, ele engasga. Se você medir o tempo da versão sequencial logo na primeira volta, ela vai parecer super lerda. Aí, quando rodar o paralelo logo depois, o Java já vai estar quente e rápido, fazendo parecer que o paralelo é 10 vezes mais rápido de mentira!<br><br>
+            <strong>A nossa solução no Main.java:</strong><br>
+            Nós rodamos <strong>3 voltas completas de teste antes</strong> (no método <code>aquecer()</code>) sem marcar o tempo no cronômetro. Só depois que o Java está 100% "quente" e rápido é que ligamos o cronômetro oficial. Isso é rigor científico de verdade.
+        </div>
+
+        <h3>3. Por que usamos System.nanoTime() em vez de currentTimeMillis()?</h3>
+        <div class="box-explicacao">
+            &bull; <code>System.currentTimeMillis()</code> lê o relógio comum do computador (horas, minutos e segundos). Se o Windows sincronizar o horário pela internet durante o teste, o relógio pode pular para frente ou para trás. Além disso, no Windows ele só muda de 15 em 15 milissegundos, o que é muito grosseiro.<br>
+            &bull; <code>System.nanoTime()</code> funciona como um cronômetro de alta precisão do próprio processador. Ele nunca volta no tempo e mede intervalos na casa dos nanossegundos (um bilionésimo de segundo), sendo ideal para benchmarks.
+        </div>
+
+        <h3>4. As continhas fáceis da prova: Speedup e Eficiência</h3>
+        <p>O professor vai querer saber quanto o programa acelerou. São duas contas muito simples:</p>
+        
+        <div style="margin-bottom: 18px;">
+            <p><strong>1. Speedup (<em>S</em>):</strong> Quantas vezes o programa ficou mais rápido comparado com 1 thread só:</p>
+            <div class="math-block">
+                <span class="math-var">S</span>&nbsp;=&nbsp;
+                <div class="math-frac">
+                    <span class="math-top">Tempo com 1 thread (sequencial)</span>
+                    <span class="math-bottom">Tempo com várias threads (paralelo)</span>
+                </div>
+            </div>
+            <p class="math-example"><strong>Exemplo:</strong> Se levou <strong>120 ms</strong> com 1 thread e <strong>32 ms</strong> com 4 threads: <em>S</em> = 120 / 32 = <strong>3.75x</strong> (ficou quase 4 vezes mais rápido!).</p>
+        </div>
+
+        <div style="margin-bottom: 18px;">
+            <p><strong>2. Eficiência Paralela (<em>E</em>):</strong> Mede quanto do potencial de cada núcleo foi aproveitado:</p>
+            <div class="math-block">
+                <span class="math-var">E</span>&nbsp;=&nbsp;
+                <div class="math-frac">
+                    <span class="math-top">Speedup</span>
+                    <span class="math-bottom">Número de Threads</span>
+                </div>
+            </div>
+            <p class="math-example"><strong>Exemplo:</strong> Com 4 threads e Speedup de 3.75x: <em>E</em> = 3.75 / 4 = <strong>93.8%</strong>. Significa que os 4 núcleos trabalharam quase no limite máximo útil, perdendo só 6% com coisas secundárias.</p>
+        </div>
+
+        <div class="box-simples">
+            <strong>O que é a Lei de Amdahl (explicada fácil):</strong><br>
+            Ela diz que não adianta colocar 1.000 threads no computador achando que vai ficar 1.000 vezes mais rápido. Por que? Porque sempre existem partes do código que só uma thread consegue fazer sozinha (como carregar os dados no começo e juntar os resultados no final). Essas partes que não dá para dividir impõem um limite natural na aceleração.
+        </div>
+
+        <h3>5. O que é Afinidade de Processador (CPU Pinning)?</h3>
+        <p>Normalmente, o Windows fica jogando as threads de um núcleo para o outro a todo momento para não esquentar demais um núcleo só.</p>
+        <div class="box-simples">
+            <strong>O que a afinidade faz?</strong><br>
+            Ela "amarra" a Thread 0 no Núcleo 0, a Thread 1 no Núcleo 1, etc. Como a thread não fica pulando de casa em casa, os dados que ela acabou de ler continuam guardados na memória super rápida daquele núcleo (os caches L1 e L2). Ela não precisa ir buscar tudo de novo lá longe na memória RAM. Isso deixa o tempo de execução muito mais estável!
+        </div>
+
+        <h3>6. A resposta da pergunta principal do trabalho (Seção 12 do PDF)</h3>
+        <p><em>"Qual é o impacto do uso de ExecutorService e da afinidade de processador no desempenho?"</em></p>
+        <div class="box-explicacao">
+            <strong>Como responder com clareza:</strong><br>
+            1. <strong>O ExecutorService</strong> acelera drasticamente o processamento (quase 4 vezes mais rápido com 4 threads), porque aproveita todos os núcleos do computador e evita o custo de ficar criando e destruindo threads nativas toda hora.<br><br>
+            2. <strong>A Afinidade de Processador</strong> dá estabilidade. Ela impede que o Windows fique trocando as threads de núcleo, aproveitando a memória cache do processador e evitando oscilações no tempo de resposta em grandes volumes de dados.
+        </div>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- PARTE 2: ROTEIRO PRÁTICO                                 -->
+    <!-- ======================================================== -->
+    <div class="section-header">
+        <h2>Roteiro Prático</h2>
+        <span class="section-tag">O que falar e o que mostrar na tela</span>
+    </div>
+
+    <div class="card">
+        <p>Siga estes passos na hora da sua apresentação. Fale com calma e clareza. Você tem de <strong>3 a 4 minutos</strong>.</p>
+
+        <!-- Etapa 1 -->
+        <div class="step-block">
+            <div class="step-title">
+                <span class="step-num">1</span>
+                Pegando a palavra e rodando o programa no terminal
+            </div>
+            <div class="acao-box">
+                <strong>O que fazer:</strong> Abra o terminal integrado no VS Code na pasta do projeto e digite o comando:
+            </div>
+            <div class="code-box">
+java -cp out app.Main --quantidade=100000 --threads=1,2,4,8
+            </div>
+            <div class="fala-box">
+                <strong>O que falar:</strong><br>
+                "Obrigado, Rafael. Bom dia/boa tarde, professor. Eu sou o Renan, o terceiro integrante do grupo. Minha função foi estruturar o benchmark de medição, calcular as métricas de Speedup e Eficiência, analisar a afinidade de processador e gerar o relatório visual final.<br><br>
+                Já coloquei o comando para rodar aqui no terminal com 100 mil transações, testando com 1, 2, 4 e 8 threads no modo Executor comum e no modo com Afinidade.<br><br>
+                Vejam que a primeira coisa que o programa imprime é <code>Realizando aquecimento da JVM (Warm-up)...</code>. Nós incluímos 3 rodadas de aquecimento prévio para que o Java compile o código para código de máquina nativo antes de ligar o cronômetro, garantindo que as nossas medições de tempo sejam precisas e justas."
+            </div>
+        </div>
+
+        <!-- Etapa 2 -->
+        <div class="step-block">
+            <div class="step-title">
+                <span class="step-num">2</span>
+                Explicando a tabela que apareceu no console
+            </div>
+            <div class="acao-box">
+                <strong>O que mostrar na tela:</strong> Aponte o mouse para as linhas de resultados que saíram no terminal.
+            </div>
+            <div class="fala-box">
+                <strong>O que falar:</strong><br>
+                "Aqui no terminal nós temos a tabela com os resultados:
+                <br>&bull; No modo <strong>SEQUENCIAL</strong> (com 1 thread), ele levou cerca de 10 a 15 milissegundos. Esse é o nosso tempo base (Speedup de 1.00x).
+                <br>&bull; No modo <strong>EXECUTOR</strong>, quando colocamos 2 threads o tempo cai praticamente pela metade. Com 4 threads, o tempo cai para cerca de 3 milissegundos, atingindo um Speedup de quase 3,8x e uma Eficiência de mais de 90%. Isso comprova que a divisão em blocos do Gabriel e os mapas locais do Rafael funcionaram perfeitamente sem gargalos.
+                <br>&bull; Com 8 threads, a gente ganha um pouco mais de velocidade, mas a eficiência cai um pouco (para uns 75%). Isso acontece porque o processador atinge o limite dos seus núcleos físicos e também pelos limites previstos pela Lei de Amdahl.
+                <br>&bull; E no modo <strong>EXECUTOR + AFFINITY</strong>, cada thread fica presa no seu núcleo fixo (0, 1, 2, 3), o que reduz as oscilações de tempo e aproveita melhor a memória cache do processador."
+            </div>
+        </div>
+
+        <!-- Etapa 3 -->
+        <div class="step-block">
+            <div class="step-title">
+                <span class="step-num">3</span>
+                Mostrando o relatório visual em resultados.html
+            </div>
+            <div class="acao-box">
+                <strong>O que fazer:</strong> Abra o arquivo <code>resultados.html</code> no navegador e mostre os cards e os gráficos de barras.
+            </div>
+            <div class="fala-box">
+                <strong>O que falar:</strong><br>
+                "Além da saída no terminal e da exportação para CSV, o nosso código em <code>HtmlReport.java</code> gera automaticamente este painel visual em <code>resultados.html</code>.<br><br>
+                Aqui nós vemos os cartões de resumo com o volume financeiro total, o ticket médio e as transações suspeitas detectadas pelo filtro do Rafael, além de gráficos de barras mostrando a queda do tempo de execução e a subida da curva de Speedup conforme aumentamos as threads."
+            </div>
+        </div>
+
+        <!-- Etapa 4 -->
+        <div class="step-block">
+            <div class="step-title">
+                <span class="step-num">4</span>
+                Conclusão do grupo
+            </div>
+            <div class="fala-box">
+                <strong>O que falar:</strong><br>
+                "Para concluir a apresentação: o uso do <code>ExecutorService</code> permitiu paralelizar o processamento com ganhos de velocidade quase lineares até o limite dos núcleos da máquina, e a afinidade de processador garantiu estabilidade evitando que o sistema operacional fique trocando as threads de núcleo.<br><br>
+                Estamos à disposição para as perguntas do senhor e para alterações no código ao vivo."
+            </div>
+        </div>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- PARTE 3: PERGUNTAS                                       -->
+    <!-- ======================================================== -->
+    <div class="section-header">
+        <h2>Perguntas</h2>
+        <span class="section-tag">Perguntas do professor e alterações ao vivo</span>
+    </div>
+
+    <div class="card">
+        <p>Aqui estão as perguntas que o professor mais costuma fazer, explicadas de forma simples e direta.</p>
+
+        <div class="qa-card">
+            <div class="qa-question">1. Por que a eficiência cai quando colocamos 8 threads em vez de 4?</div>
+            <div class="qa-answer">
+                <strong>Como responder:</strong> "Porque a máquina física tem um número limitado de núcleos reais. Além disso, pela Lei de Amdahl, existem partes do código que são puramente sequenciais (como criar o pool de threads e juntar os resultados no final). Conforme você coloca mais e mais threads, essas partes sequenciais começam a pesar mais no tempo total, diminuindo a eficiência."
+            </div>
+        </div>
+
+        <div class="qa-card">
+            <div class="qa-question">2. O que aconteceria se você não fizesse as rodadas de aquecimento (Warm-up)?</div>
+            <div class="qa-answer">
+                <strong>Como responder:</strong> "O teste ficaria distorcido e injusto. O Java começa rodando interpretado e vai compilando o código aos poucos enquanto roda. Se não aquecêssemos, a versão sequencial rodaria na parte lenta do Java e pareceria muito mais demorada do que realmente é. Aí o paralelo pareceria milagrosamente mais rápido, dando um Speedup falso e enganoso."
+            </div>
+        </div>
+
+        <div class="qa-card">
+            <div class="qa-question">3. O que acontece se a biblioteca de Afinidade não estiver instalada na máquina?</div>
+            <div class="qa-answer">
+                <strong>Como responder:</strong> "Nós programamos o <code>AffinitySupport</code> usando reflexão dinâmica (Reflection). Ele tenta ligar a afinidade; se a biblioteca ou o arquivo nativo não estiverem presentes, ele cai num bloco <code>try/catch</code> silencioso e roda o código normalmente sem travar o programa. Assim o projeto roda em qualquer computador sem quebrar."
+            </div>
+        </div>
+
+        <div class="pegadinha">
+            <strong>Alteração ao vivo provável:</strong> <em>"Renan, mude o número de voltas de aquecimento de 3 para 5."</em><br><br>
+            <strong>O que fazer:</strong><br>
+            1. Abra <code>src/main/java/app/Main.java</code>;<br>
+            2. Vá no método <code>aquecer()</code> (linha 90);<br>
+            3. Altere o laço <code>for</code> de 3 para 5:<br>
+            <code>for (int i = 0; i < 5; i++) {</code>
+        </div>
+
+        <div class="pegadinha">
+            <strong>Alteração ao vivo provável:</strong> <em>"Renan, rode o teste apenas para 2 e 4 threads com 500 mil transações."</em><br><br>
+            <strong>Como rodar direto no terminal:</strong><br>
+            <code>java -cp out app.Main --quantidade=500000 --threads=2,4</code>
+        </div>
+    </div>
+
+</body>
+</html>
