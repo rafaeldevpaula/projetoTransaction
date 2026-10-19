@@ -93,24 +93,27 @@ body {
 }
 
 /* Cards de KPIs */
+/* Cards de KPIs */
 .cards-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
 }
 
 .kpi-card {
     background-color: var(--card-bg);
     border: 1px solid var(--border-color);
     border-radius: 8px;
-    padding: 18px;
+    padding: 18px 20px;
     border-left: 4px solid var(--accent-blue);
+    min-width: 0;
+    overflow: hidden;
 }
 
 .kpi-title {
     display: block;
-    font-size: 13px;
-    font-weight: 500;
+    font-size: 12.5px;
+    font-weight: 600;
     color: var(--text-secondary);
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -118,10 +121,23 @@ body {
 
 .kpi-value {
     display: block;
-    font-size: 24px;
+    font-size: 21px;
     font-weight: 700;
     color: #ffffff;
-    margin: 8px 0 4px 0;
+    margin: 8px 0 2px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    letter-spacing: -0.3px;
+}
+
+.kpi-compact {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent-emerald);
+    margin-bottom: 4px;
+    white-space: nowrap;
 }
 
 .kpi-desc {
@@ -138,24 +154,27 @@ body {
 table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 14px;
+    font-size: 13.5px;
+    white-space: nowrap;
 }
 
 th, td {
-    padding: 12px 16px;
+    padding: 10px 14px;
     text-align: right;
     border-bottom: 1px solid var(--border-color);
+    white-space: nowrap;
 }
 
 th:first-child, td:first-child {
     text-align: left;
+    white-space: nowrap;
 }
 
 th {
     background-color: rgba(15, 23, 42, 0.6);
     color: var(--text-secondary);
     font-weight: 600;
-    font-size: 13px;
+    font-size: 12.5px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
@@ -192,7 +211,7 @@ tr:hover td {
 /* Grid de Tabelas Secundárias */
 .multi-tables-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 20px;
 }
 
@@ -201,6 +220,8 @@ tr:hover td {
     border: 1px solid var(--border-color);
     border-radius: 8px;
     padding: 16px;
+    overflow-x: auto;
+    min-width: 0;
 }
 
 .sub-table-container h3 {

@@ -120,20 +120,23 @@ public final class HtmlReport {
           .append("        <h2>Visão Geral da Agregação Financeira</h2>\n")
           .append("        <div class=\"cards-grid\">\n");
 
-        appendCard(sb, "Valor Total Processado", formatCurrency(analysis.total()), "Soma de todas as transações");
-        appendCard(sb, "Ticket Médio", formatCurrency(analysis.average()), "Média aritmética dos valores");
-        appendCard(sb, "Transações Suspeitas", String.format(Locale.US, "%,d", analysis.suspicious()), "Critérios de risco atendidos");
-        appendCard(sb, "Maior Transação", formatCurrency(analysis.maximum()), "Pico financeiro registrado");
+        appendCard(sb, "Valor Total Processado", formatCurrency(analysis.total()), formatCompact(analysis.total()), "Soma de todas as transações");
+        appendCard(sb, "Ticket Médio", formatCurrency(analysis.average()), "", "Média aritmética dos valores");
+        appendCard(sb, "Transações Suspeitas", String.format(Locale.US, "%,d", analysis.suspicious()), "", "Critérios de risco atendidos");
+        appendCard(sb, "Maior Transação", formatCurrency(analysis.maximum()), formatCompact(analysis.maximum()), "Pico financeiro registrado");
 
         sb.append("        </div>\n")
           .append("    </section>\n\n");
     }
 
-    private static void appendCard(StringBuilder sb, String title, String value, String description) {
+    private static void appendCard(StringBuilder sb, String title, String value, String compact, String description) {
         sb.append("            <div class=\"kpi-card\">\n")
           .append("                <span class=\"kpi-title\">").append(title).append("</span>\n")
-          .append("                <strong class=\"kpi-value\">").append(value).append("</strong>\n")
-          .append("                <span class=\"kpi-desc\">").append(description).append("</span>\n")
+          .append("                <strong class=\"kpi-value\">").append(value).append("</strong>\n");
+        if (compact != null && !compact.isBlank()) {
+            sb.append("                <span class=\"kpi-compact\">").append(compact).append("</span>\n");
+        }
+        sb.append("                <span class=\"kpi-desc\">").append(description).append("</span>\n")
           .append("            </div>\n");
     }
 
@@ -304,6 +307,17 @@ public final class HtmlReport {
     }
 
     private static String formatCurrency(double value) {
-        return String.format(Locale.US, "R$ %,.2f", value);
+        return String.format(Locale.US, "R$&nbsp;%,.2f", value);
+    }
+
+    private static String formatCompact(double value) {
+        if (value >= 1_000_000_000.0) {
+            return String.format(Locale.US, "≈ R$&nbsp;%.2f Bilhões", value / 1_000_000_000.0);
+        } else if (value >= 1_000_000.0) {
+            return String.format(Locale.US, "≈ R$&nbsp;%.2f Milhões", value / 1_000_000.0);
+        } else if (value >= 1_000.0) {
+            return String.format(Locale.US, "≈ R$&nbsp;%.2f Mil", value / 1_000.0);
+        }
+        return "";
     }
 }
